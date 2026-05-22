@@ -66,7 +66,13 @@
 }
 .brand-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow); }
 .brand-card.selected { border-color: var(--accent); background: rgba(232,75,42,0.05); }
-.brand-logo { font-size: 2.5rem; margin-bottom: 0.6rem; }
+.brand-logo {
+  width: 80px;
+  height: 50px;
+  object-fit: contain;
+  margin: 0 auto 0.6rem;
+  display: block;
+}
 .brand-name { font-family: var(--font-head); font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
 .brand-tagline { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.4rem; }
 .brand-count {
@@ -85,16 +91,14 @@
   animation: fadeIn 0.3s ease;
 }
 .brand-hero-logo { font-size: 4rem; }
+.brand-hero-img {
+  width: 150px;
+  height: 100px;
+  object-fit: contain;
+  display: block;
+}
 .brand-hero-info h2 { font-family: var(--font-head); font-size: 1.8rem; font-weight: 700; }
 .brand-hero-info p { color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 0.3rem; }
-
-/* BRAND PRODUCTS HEADER */
-.brand-products-header {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  margin-bottom: 1.5rem; gap: 1rem;
-}
-.brand-products-title { font-family: var(--font-head); font-size: 1.5rem; font-weight: 700; }
-.brand-products-sub { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem; }
 
 /* Fix brand card logo */
 .brand-logo {
