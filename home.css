@@ -751,13 +751,6 @@
   line-height: 1.6;
   font-size: 0.9rem;
 }
-.review-success {
-  display: none;
-  color: #2a8a5c;
-  font-size: 0.88rem;
-  font-weight: 600;
-  animation: fadeUp 0.3s ease;
-}
 /* ========================
    NEWSLETTER
    ======================== */
