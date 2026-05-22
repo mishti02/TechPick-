@@ -116,6 +116,37 @@
   filter: brightness(0) invert(1);
 }
 
+.brand-logo-wrap {
+  width: 80px;
+  height: 50px;
+  margin: 0 auto 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.brand-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.brand-hero-logo-wrap {
+  width: 150px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  flex-shrink: 0;
+}
+.brand-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .explore-tabs-wrap { padding: 0 1.5rem; }
