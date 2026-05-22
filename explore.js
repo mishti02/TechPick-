@@ -60,8 +60,7 @@ function renderBrands() {
     const count = products.filter(p => p.brand === b.name).length;
     return `
       <div class="brand-card" onclick="showBrand('${b.name}')" id="bc-${b.name}">
-           <img src="${b.logo}" alt="${b.name}" class="brand-logo">
-
+      <div class="brand-logo-wrap"><img src="${b.logo}" alt="${b.name}" class="brand-logo"></div>
         <div class="brand-name">${b.name}</div>
         <div class="brand-tagline">${b.tagline}</div>
         <div class="brand-count">${count} device${count !== 1 ? "s" : ""}</div>
@@ -82,9 +81,7 @@ function showBrand(brandName) {
 
   // Show brand hero banner
   document.getElementById("brandHero").innerHTML = `
-   <div class="brand-hero-logo">
-   <img src="${brand.logo}" class="brand-hero-img">
-</div>
+   <div class="brand-hero-logo-wrap"><img src="${brand.logo}" class="brand-hero-img"></div>
     <div class="brand-hero-info">
       <h2>${brandName}</h2>
       <p>${brand ? brand.tagline : ""} · ${brandProducts.length} devices on TechPick</p>
