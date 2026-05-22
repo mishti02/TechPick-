@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Saved Devices — TechPick</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="auth.css"/>
+  <link rel="stylesheet" href="saved.css"/>
+</head>
+<body>
+
+  <nav class="navbar">
+  <a href="index.html" class="nav-logo">Tech<span>Pick</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="finder.html">Finder</a></li>
+    <li><a href="explore.html">Explore</a></li>
+    <li><a href="saved.html" class="active">Saved</a></li>
+    <li><a href="profile.html">Profile</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html" class="nav-contact-btn">📬 Contact</a>
+    <!-- auth.js appends user chip after this -->
+  </div>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="finder.html">Finder</a>
+  <a href="explore.html">Explore</a>
+  <a href="saved.html">Saved</a>
+  <a href="profile.html">Profile</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+  <!-- PAGE HEADER -->
+  <div class="saved-page-header saved-page-bg">
+    <div class="saved-header-left">
+      <div class="section-tag">🔖 Your Collection</div>
+      <h1>Saved Devices</h1>
+      <p>All the gadgets you've bookmarked — compare, remove, or go find them.</p>
+    </div>
+    <div class="saved-header-stats">
+      <div class="saved-hstat">
+        <span class="saved-hstat-num" id="hdStatCount">0</span>
+        <span class="saved-hstat-label">Saved</span>
+      </div>
+      <div class="saved-hstat-sep"></div>
+      <div class="saved-hstat">
+        <span class="saved-hstat-num" id="hdStatTotal">₹0</span>
+        <span class="saved-hstat-label">Total Value</span>
+      </div>
+      <div class="saved-hstat-sep"></div>
+      <div class="saved-hstat">
+        <span class="saved-hstat-num" id="hdStatAvg">₹0</span>
+        <span class="saved-hstat-label">Avg Price</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="saved-toolbar-wrap">
+    <div class="saved-toolbar">
+      <!-- Filter by category -->
+      <div class="saved-filter-group">
+        <span class="saved-filter-label">Filter:</span>
+        <div class="chip-row" id="savedCatFilter">
+          <button class="chip active" data-cat="all">All</button>
+          <button class="chip" data-cat="smartphone">📱 Phones</button>
+          <button class="chip" data-cat="laptop">💻 Laptops</button>
+          <button class="chip" data-cat="headphones">🎧 Audio</button>
+          <button class="chip" data-cat="tablet">📟 Tablets</button>
+          <button class="chip" data-cat="smartwatch">⌚ Watches</button>
+        </div>
+      </div>
+
+      <!-- Sort -->
+      <div class="saved-filter-group">
+        <span class="saved-filter-label">Sort:</span>
+        <select class="config-select" id="savedSort" onchange="renderSavedPage()">
+          <option value="saved">Recently Saved</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="rating">Highest Rated</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+
+      <!-- View toggle -->
+      <div class="saved-view-btns">
+        <button class="saved-view-btn active" id="viewGrid" onclick="setView('grid')" title="Grid view">⊞</button>
+        <button class="saved-view-btn" id="viewList" onclick="setView('list')" title="List view">☰</button>
+      </div>
+
+      <!-- Clear all -->
+      <button class="danger-btn" style="width:auto;padding:0.45rem 1rem;font-size:0.78rem" onclick="clearAllSavedPage()">🗑️ Clear All</button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="saved-page-wrap">
+
+    <!-- EMPTY STATE -->
+    <div class="saved-empty" id="savedEmpty" style="display:none">
+      <div class="saved-empty-icon">🔖</div>
+      <h2>Nothing saved yet</h2>
+      <p>Head over to the Finder and bookmark devices you're interested in.</p>
+      <a href="finder.html" class="btn-primary" style="margin-top:1.5rem">Browse Devices →</a>
+    </div>
+
+    <!-- COMPARE BAR (appears when 2 selected) -->
+    <div class="saved-compare-bar" id="savedCompareBar" style="display:none">
+      <span id="savedCompareText">Select 2 devices to compare</span>
+      <div style="display:flex;gap:0.5rem">
+        <button class="btn-primary" onclick="openSavedCompare()">Compare →</button>
+        <button class="btn-outline" onclick="clearSavedCompare()">Clear</button>
+      </div>
+    </div>
+
+    <!-- GRID / LIST -->
+    <div class="saved-grid" id="savedGrid"></div>
+
+  </div>
+
+  <!-- COMPARE MODAL -->
+  <div class="compare-modal-overlay" id="savedCompareModal">
+    <div class="compare-modal">
+      <div class="compare-modal-header">
+        <h3>⚖️ Device Comparison</h3>
+        <button class="compare-close-btn" onclick="closeSavedCompare()">✕ Close</button>
+      </div>
+      <table class="compare-table" id="savedCompareTable"></table>
+    </div>
+  </div>
+
+  <!-- DETAIL MODAL -->
+  <div class="modal-overlay" id="savedDetailModal" style="display:none" onclick="closeSavedDetail(event)">
+    <div class="device-modal">
+      <button class="modal-close" onclick="document.getElementById('savedDetailModal').style.display='none'">✕</button>
+      <div class="modal-body" id="savedDetailBody"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">Tech<span>Pick</span></div>
+        <p>Smart recommendations for smart buyers.</p>
+      </div>
+      <div class="footer-col">
+        <strong>Pages</strong>
+        <a href="index.html">Home</a>
+        <a href="finder.html">Finder</a>
+        <a href="explore.html">Explore</a>
+        <a href="profile.html">Profile</a>
+        <a href="saved.html">Saved</a>
+      </div>
+      <div class="footer-col">
+        <strong>Categories</strong>
+        <a href="finder.html?cat=smartphone">Smartphones</a>
+        <a href="finder.html?cat=laptop">Laptops</a>
+        <a href="finder.html?cat=headphones">Audio</a>
+        <a href="finder.html?cat=tablet">Tablets</a>
+        <a href="finder.html?cat=smartwatch">Smartwatches</a>
+      </div>
+    </div>
+    <div class="footer-bottom">· TechPick 2026</div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="config.js"></script>
+  <script src="shared.js"></script>
+  <script src="auth.js"></script>
+  <script src="saved.js"></script>
+</body>
+</html>

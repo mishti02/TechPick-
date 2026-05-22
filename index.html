@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechPick — Find Your Perfect Device</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="home.css"/>
+  <link rel="stylesheet" href="auth.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+  <a href="index.html" class="nav-logo">Tech<span>Pick</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="finder.html">Finder</a></li>
+    <li><a href="explore.html">Explore</a></li>
+    <li><a href="saved.html">Saved</a></li>
+    <li><a href="profile.html">Profile</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html" class="nav-contact-btn">📬 Contact</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="active">Home</a>
+  <a href="finder.html">Finder</a>
+  <a href="explore.html">Explore</a>
+  <a href="saved.html">Saved</a>
+  <a href="profile.html">Profile</a>
+  <a href="contact.html">Contact</a>
+</div>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="active">Home</a>
+    <a href="finder.html">Finder</a>
+    <a href="explore.html">Explore</a>
+    <a href="profile.html">Profile</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <div class="section-tag">🚀 Smart Tech Recommendations</div>
+      <h1>Find your next<br/><span class="hero-highlight">favourite gadget</span><br/>without the confusion.</h1>
+      <p>Set your budget, pick a category, and get personalised device suggestions — no endless scrolling needed.</p>
+      <div class="hero-btns">
+        <a href="finder.html" class="btn-primary">Start Finding →</a>
+        <a href="explore.html" class="btn-outline">See Trending</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><strong>29+</strong><span>Devices</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><strong>10</strong><span>Brands</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><strong>5</strong><span>Categories</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <!--
+        Replace the src below with the path to your isometric image.
+        e.g. src="assets/hero-iso.png"
+        The image should be the cloud/tech isometric illustration.
+      -->
+      <img
+        class="hero-iso"
+        src="img.jpg"
+        alt="TechPick devices illustration"
+      />
+      <div class="hero-iso-badge">
+        <div class="hero-iso-badge-dot"></div>
+        <span>Live recommendations</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK QUIZ -->
+  <section class="quiz-section">
+    <div class="quiz-inner">
+      <div class="section-header">
+        <div class="section-tag">🤔 Not Sure Where to Start?</div>
+        <h2>Quick 3-Question Quiz</h2>
+        <p>Answer 3 simple questions and we'll suggest the right category for you.</p>
+      </div>
+      <div class="quiz-box" id="quizBox">
+        <!-- Step 1 -->
+        <div class="quiz-step active" id="step1">
+          <p class="quiz-q">What do you mostly use a device for?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="quizAnswer(1,'work')">💼 Work & Study</button>
+            <button class="quiz-opt" onclick="quizAnswer(1,'entertainment')">🎬 Entertainment</button>
+            <button class="quiz-opt" onclick="quizAnswer(1,'fitness')">🏃 Fitness & Health</button>
+            <button class="quiz-opt" onclick="quizAnswer(1,'photography')">📸 Photography</button>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="quiz-step" id="step2">
+          <p class="quiz-q">What's your budget range?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="quizAnswer(2,'low')">💚 Under ₹30K</button>
+            <button class="quiz-opt" onclick="quizAnswer(2,'mid')">💛 ₹30K – ₹80K</button>
+            <button class="quiz-opt" onclick="quizAnswer(2,'high')">🧡 ₹80K – ₹1.5L</button>
+            <button class="quiz-opt" onclick="quizAnswer(2,'premium')">❤️ Above ₹1.5L</button>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="quiz-step" id="step3">
+          <p class="quiz-q">Do you prefer a specific brand?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" onclick="quizAnswer(3,'Apple')">🍎 Apple</button>
+            <button class="quiz-opt" onclick="quizAnswer(3,'Samsung')">🌀 Samsung</button>
+            <button class="quiz-opt" onclick="quizAnswer(3,'other')">🔵 Others</button>
+            <button class="quiz-opt" onclick="quizAnswer(3,'any')">🤷 No Preference</button>
+          </div>
+        </div>
+        <!-- Result -->
+        <div class="quiz-step" id="quizResult">
+          <div class="quiz-result-icon" id="quizResultIcon">🎉</div>
+          <p class="quiz-result-title" id="quizResultTitle">We recommend...</p>
+          <p class="quiz-result-desc" id="quizResultDesc"></p>
+          <a href="finder.html" id="quizResultLink" class="btn-primary" style="margin-top:1.25rem">See Recommendations →</a>
+          <button class="btn-outline" style="margin-top:0.75rem" onclick="resetQuiz()">Retake Quiz</button>
+        </div>
+        <!-- Progress -->
+        <div class="quiz-progress" id="quizProgress">
+          <div class="qp-dot active" id="dot1"></div>
+          <div class="qp-dot" id="dot2"></div>
+          <div class="qp-dot" id="dot3"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK LINKS -->
+  <section class="quicklinks-section">
+    <div class="section-header centered">
+      <div class="section-tag">🗂️ Browse By Category</div>
+      <h2>What are you looking for?</h2>
+    </div>
+    <div class="quicklinks-grid">
+      <a href="finder.html?cat=smartphone" class="qlink-card">
+        <div class="qlink-icon"><img src="./products-images/iphone 15 pro.jpg" alt="Smartphones"/></div>
+        <strong>Smartphones</strong>
+      </a>
+      <a href="finder.html?cat=laptop" class="qlink-card">
+      <div class="qlink-icon"><img src="./products-images/mackbook air m3.jpeg" alt="Laptops"/></div>
+        <strong>Laptops</strong>
+      </a>
+      <a href="finder.html?cat=headphones" class="qlink-card">
+        <div class="qlink-icon"><img src="./products-images/sony wh.jpg" alt="Headphones"/></div>
+        <strong>Audio</strong>
+      </a>
+      <a href="finder.html?cat=tablet" class="qlink-card">
+        <div class="qlink-icon"><img src="./products-images/12.9.jpg" alt="Tablets"/></div>
+        <strong>Tablets</strong>
+      </a>
+      <a href="finder.html?cat=smartwatch" class="qlink-card">
+        <div class="qlink-icon"><img src="./products-images/series 9.jpg" alt="Smartwatches"/></div>
+        <strong>Smartwatches</strong>
+      </a>
+    </div>
+  </section>
+
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="how-inner">
+      <div class="section-header centered">
+        <div class="section-tag">⚙️ Simple Process</div>
+        <h2>How TechPick Works</h2>
+        <p>Three easy steps to find your perfect device — no tech knowledge needed.</p>
+      </div>
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-step">Step 1</div>
+          <div class="how-icon">🎯</div>
+          <h3>Pick Your Category</h3>
+          <p>Choose what type of device you're looking for — phone, laptop, audio, tablet, or smartwatch.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-step">Step 2</div>
+          <div class="how-icon">💰</div>
+          <h3>Set Your Budget</h3>
+          <p>Drag the budget slider to your comfortable range and we'll instantly filter out everything above it.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-step">Step 3</div>
+          <div class="how-icon">✅</div>
+          <h3>Get Your Match</h3>
+          <p>Browse your personalised results, save favourites, and compare devices side by side before deciding.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEAL OF THE DAY -->
+  <section class="deal-section">
+    <div class="section-header">
+      <div class="section-tag">⚡ Limited Time</div>
+      <h2>Deal of the Day</h2>
+    </div>
+    <div class="deal-banner">
+      <div class="deal-content">
+        <div class="deal-tag">🔥 Today Only</div>
+        <h2>Sony WH-1000XM5</h2>
+        <p>Industry-leading noise cancellation · 30hr battery · Multipoint connect</p>
+        <div class="deal-price-row">
+          <span class="deal-price">₹19,990</span>
+          <span class="deal-original">₹26,990</span>
+          <span class="deal-discount">26% OFF</span>
+        </div>
+        <a href="finder.html?cat=headphones" class="btn-primary">View Deal →</a>
+      </div>
+      <div class="deal-right">
+        <div class="deal-image-wrap">
+  <img 
+    src="headphone.png" 
+    alt="Sony WH-1000XM5"
+    class="deal-image"
+  />
+</div>
+        <div class="deal-timer">
+          <div class="deal-timer-label">Ends in</div>
+          <div class="timer-boxes">
+            <div class="timer-box"><span class="timer-num" id="tHours">00</span><span class="timer-unit">Hrs</span></div>
+            <div class="timer-box"><span class="timer-num" id="tMins">00</span><span class="timer-unit">Min</span></div>
+            <div class="timer-box"><span class="timer-num" id="tSecs">00</span><span class="timer-unit">Sec</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE DEVICES -->
+  <section class="compare-section">
+    <div class="compare-inner">
+      <div class="section-header">
+        <div class="section-tag">⚖️ Side by Side</div>
+        <h2>Compare Devices</h2>
+        <p>Pick any two devices and see them compared side by side.</p>
+      </div>
+      <div class="compare-pick-grid" id="comparePickGrid"></div>
+      <div class="compare-btn-row">
+        <button class="btn-primary" onclick="openCompare()">Compare Selected →</button>
+        <span class="compare-selected-info" id="compareInfo">Select 2 devices to compare</span>
+        <button class="btn-outline" onclick="clearCompare()">Clear</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE MODAL -->
+  <div class="compare-modal-overlay" id="compareModal">
+    <div class="compare-modal">
+      <div class="compare-modal-header">
+        <h3>Device Comparison</h3>
+        <button class="compare-close-btn" onclick="closeCompare()">✕ Close</button>
+      </div>
+      <table class="compare-table" id="compareTable"></table>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="section-header">
+      <div class="section-tag">💬 Reviews</div>
+      <h2>What Users Say</h2>
+      <p>Real people who found their perfect device through TechPick.</p>
+    </div>
+    <div class="testimonials-track" id="testimonialsTrack"></div>
+  </section>
+  
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter-section">
+    <div class="newsletter-inner">
+      <div class="section-tag">📩 Stay Updated</div>
+      <h2>Get the Best Deals First</h2>
+      <p>Subscribe and we'll notify you when prices drop on your saved devices.</p>
+      <div class="newsletter-form">
+        <input type="email" id="newsletterEmail" placeholder="your@email.com"/>
+        <button class="btn-primary" onclick="subscribeNewsletter()">Subscribe</button>
+      </div>
+      <div class="newsletter-success" id="newsletterSuccess">
+        🎉 You're in! We'll send the best deals straight to you.
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">Tech<span>Pick</span></div>
+        <p>Smart recommendations for smart buyers. No ads, no bias — just the best picks for your budget.</p>
+      </div>
+      <div class="footer-col">
+        <strong>Pages</strong>
+        <a href="index.html">Home</a>
+        <a href="finder.html">Finder</a>
+        <a href="explore.html">Explore</a>
+        <a href="profile.html">Profile</a>
+        <a href="contact.html">Contact</a>  </div>
+      <div class="footer-col">
+        <strong>Categories</strong>
+        <a href="finder.html?cat=smartphone">Smartphones</a>
+        <a href="finder.html?cat=laptop">Laptops</a>
+        <a href="finder.html?cat=headphones">Audio</a>
+        <a href="finder.html?cat=tablet">Tablets</a>
+        <a href="finder.html?cat=smartwatch">Smartwatches</a>
+      </div>
+    </div>
+    <div class="footer-bottom">· TechPick 2026</div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="config.js"></script>
+  <script src="shared.js"></script>
+  <script src="auth.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — TechPick</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="auth.css"/>
+  <link rel="stylesheet" href="contact.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+  <a href="index.html" class="nav-logo">Tech<span>Pick</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="finder.html">Finder</a></li>
+    <li><a href="explore.html">Explore</a></li>
+    <li><a href="saved.html">Saved</a></li>
+    <li><a href="profile.html">Profile</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html" class="nav-contact-btn">📬 Contact</a>
+    <!-- auth.js appends user chip after this -->
+  </div>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="finder.html">Finder</a>
+  <a href="explore.html">Explore</a>
+  <a href="saved.html">Saved</a>
+  <a href="profile.html">Profile</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+  <!-- PAGE HEADER -->
+  <div class="contact-hero">
+    <div class="contact-hero-bg"></div>
+    <div class="contact-hero-content">
+      <div class="section-tag">📬 We're Here to Help</div>
+      <h1>Get in Touch</h1>
+      <p>Have a question, suggestion, or just want to say hi? We'd love to hear from you.</p>
+    </div>
+  </div>
+
+  <!-- MAIN CONTACT SECTION -->
+  <div class="contact-page-wrap">
+
+    <div class="contact-grid">
+
+      <!-- LEFT: INFO CARDS -->
+      <div class="contact-info-col">
+
+        <div class="contact-info-card">
+          <div class="contact-info-icon">📧</div>
+          <div>
+            <div class="contact-info-label">Email Us</div>
+            <div class="contact-info-value">support@techpick.co</div>
+            <div class="contact-info-sub">We reply within 24 hours</div>
+          </div>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="contact-info-icon">💬</div>
+          <div>
+            <div class="contact-info-label">Live Chat</div>
+            <div class="contact-info-value">Available Mon–Fri</div>
+            <div class="contact-info-sub">9 AM – 6 PM IST</div>
+          </div>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="contact-info-icon">🐛</div>
+          <div>
+            <div class="contact-info-label">Report a Bug</div>
+            <div class="contact-info-value">bugs@techpick.co</div>
+            <div class="contact-info-sub">Help us improve TechPick</div>
+          </div>
+        </div>
+
+        <!-- FAQ quick links -->
+        <div class="contact-faq-box">
+          <div class="contact-faq-title">Quick FAQs</div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q">How does the Device Finder work? <span class="faq-arrow">›</span></div>
+            <div class="faq-a">Set your category, budget, and configuration — our finder filters devices from our database and enriches results with Wikipedia data in real time.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q">Is TechPick free to use? <span class="faq-arrow">›</span></div>
+            <div class="faq-a">Yes, completely free! No ads, no sponsored recommendations — just honest picks for your budget.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q">How do I save devices? <span class="faq-arrow">›</span></div>
+            <div class="faq-a">Create a free account and click the 🔖 bookmark button on any device card. Access your saved list from your Profile page.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q">Can I suggest a device to add? <span class="faq-arrow">›</span></div>
+            <div class="faq-a">Absolutely! Use the contact form and select "Device Suggestion" as your subject — we review all requests.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: CONTACT FORM -->
+      <div class="contact-form-card">
+
+        <div class="contact-form-header">
+          <h2>Send a Message</h2>
+          <p>Fill in the form and we'll get back to you as soon as possible.</p>
+        </div>
+
+        <!-- Success message (hidden by default) -->
+        <div class="contact-success" id="contactSuccess" style="display:none">
+          <div class="contact-success-icon">🎉</div>
+          <h3>Message Sent!</h3>
+          <p>Thanks for reaching out. We'll reply to your email within 24 hours.</p>
+          <button class="btn-outline" style="margin-top:1rem" onclick="resetContactForm()">Send Another →</button>
+        </div>
+
+        <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)" novalidate>
+
+          <!-- Name row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contactFirst">First Name</label>
+              <input class="form-input" type="text" id="contactFirst" placeholder="Arjun" autocomplete="given-name"/>
+              <div class="field-error" id="errFirst"></div>
+            </div>
+            <div class="form-group">
+              <label for="contactLast">Last Name</label>
+              <input class="form-input" type="text" id="contactLast" placeholder="Sharma" autocomplete="family-name"/>
+              <div class="field-error" id="errLast"></div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="contactEmail">Email Address</label>
+            <input class="form-input" type="email" id="contactEmail" placeholder="arjun@example.com" autocomplete="email"/>
+            <div class="field-error" id="errEmail"></div>
+          </div>
+
+          <!-- Subject -->
+          <div class="form-group">
+            <label for="contactSubject">Subject</label>
+            <select class="form-input" id="contactSubject">
+              <option value="">Select a topic...</option>
+              <option value="general">💬 General Inquiry</option>
+              <option value="support">🛠️ Technical Support</option>
+              <option value="suggestion">💡 Feature Suggestion</option>
+              <option value="device">📱 Device Suggestion</option>
+              <option value="bug">🐛 Bug Report</option>
+              <option value="partnership">🤝 Partnership</option>
+              <option value="other">✨ Other</option>
+            </select>
+            <div class="field-error" id="errSubject"></div>
+          </div>
+
+          <!-- Message -->
+          <div class="form-group">
+            <label for="contactMessage">Message
+              <span class="char-count" id="charCount">0 / 500</span>
+            </label>
+            <textarea class="form-input contact-textarea" id="contactMessage"
+              placeholder="Tell us what's on your mind..."
+              rows="5" maxlength="500"
+              oninput="updateCharCount()"></textarea>
+            <div class="field-error" id="errMessage"></div>
+          </div>
+
+          <!-- Privacy note + Submit -->
+          <div class="contact-form-footer">
+            <p class="contact-privacy">
+              🔒 Your info is never shared or sold. We'll only use it to reply to you.
+            </p>
+            <button type="submit" class="btn-primary contact-submit-btn" id="submitBtn">
+              <span id="submitBtnText">Send Message →</span>
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">Tech<span>Pick</span></div>
+        <p>Smart recommendations for smart buyers. No ads, no bias — just the best picks for your budget.</p>
+      </div>
+      <div class="footer-col">
+        <strong>Pages</strong>
+        <a href="index.html">Home</a>
+        <a href="finder.html">Finder</a>
+        <a href="explore.html">Explore</a>
+        <a href="profile.html">Profile</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <strong>Categories</strong>
+        <a href="finder.html?cat=smartphone">Smartphones</a>
+        <a href="finder.html?cat=laptop">Laptops</a>
+        <a href="finder.html?cat=headphones">Audio</a>
+        <a href="finder.html?cat=tablet">Tablets</a>
+        <a href="finder.html?cat=smartwatch">Smartwatches</a>
+      </div>
+    </div>
+    <div class="footer-bottom">· TechPick 2026</div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="config.js"></script>
+  <script src="shared.js"></script>
+  <script src="auth.js"></script>
+  <script src="contact.js"></script>
+</body>
+</html>

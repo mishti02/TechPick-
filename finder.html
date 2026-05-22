@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Device Finder — TechPick</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="finder.css"/>
+  <link rel="stylesheet" href="auth.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+  <a href="index.html" class="nav-logo">Tech<span>Pick</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="finder.html" class="active">Finder</a></li>
+    <li><a href="explore.html">Explore</a></li>
+    <li><a href="saved.html">Saved</a></li>
+    <li><a href="profile.html">Profile</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html" class="nav-contact-btn">📬 Contact</a>
+    <!-- auth.js appends user chip after this -->
+  </div>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="finder.html">Finder</a>
+  <a href="explore.html">Explore</a>
+  <a href="saved.html">Saved</a>
+  <a href="profile.html">Profile</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="section-tag">🎯 Personalised</div>
+    <h1>Device Finder</h1>
+    <p>Set your configuration and budget — we'll find real devices that match.</p>
+  </div>
+
+  <!-- TOP FILTER BAR -->
+  <div class="filter-bar-wrap">
+    <div class="filter-bar">
+
+      <!-- STEP 1: CATEGORY -->
+      <div class="filter-group">
+        <div class="filter-group-label">1. Category</div>
+        <div class="chip-row" id="catChips">
+          <button class="chip active" data-cat="laptop">💻 Laptop</button>
+          <button class="chip" data-cat="smartphone">📱 Phone</button>
+          <button class="chip" data-cat="headphones">🎧 Audio</button>
+          <button class="chip" data-cat="tablet">📟 Tablet</button>
+          <button class="chip" data-cat="smartwatch">⌚ Watch</button>
+        </div>
+      </div>
+
+      <div class="filter-divider"></div>
+
+      <!-- STEP 2: BUDGET -->
+      <div class="filter-group">
+        <div class="filter-group-label">2. Max Budget: <strong id="budgetDisplay">₹1L</strong></div>
+        <input type="range" class="range-slider" id="budgetSlider"
+               min="5000" max="250000" step="5000" value="100000"/>
+        <div class="slider-labels"><span>₹5K</span><span>₹2.5L</span></div>
+      </div>
+
+      <div class="filter-divider"></div>
+
+      <!-- STEP 3: DYNAMIC CONFIG (changes based on category) -->
+      <div class="filter-group" id="configGroup">
+        <div class="filter-group-label">3. Configuration</div>
+        <div id="configOptions">
+          <!-- Filled by JS based on selected category -->
+        </div>
+      </div>
+
+      <div class="filter-divider"></div>
+
+      <!-- STEP 4: BRAND -->
+      <div class="filter-group">
+        <div class="filter-group-label">4. Brand</div>
+        <div class="chip-row" id="brandChips">
+          <button class="chip active" data-brand="all">All</button>
+          <button class="chip" data-brand="Apple">Apple</button>
+          <button class="chip" data-brand="Samsung">Samsung</button>
+          <button class="chip" data-brand="Sony">Sony</button>
+          <button class="chip" data-brand="Lenovo">Lenovo</button>
+          <button class="chip" data-brand="OnePlus">OnePlus</button>
+          <button class="chip" data-brand="Dell">Dell</button>
+        </div>
+      </div>
+
+      <div class="filter-divider"></div>
+
+      <!-- SEARCH BUTTON -->
+      <div class="filter-group filter-action">
+        <button class="btn-primary" onclick="runSearch()">
+          <span id="searchBtnText">Find Devices</span>
+        </button>
+        <button class="btn-outline" onclick="resetFinder()">Reset</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESULTS AREA -->
+  <div class="finder-results-wrap">
+
+    <!-- STATUS BAR -->
+    <div class="results-status" id="resultsStatus" style="display:none">
+      <div id="resultsStatusText"></div>
+      <div class="api-badge" id="apiBadge" style="display:none">
+        <span class="api-dot"></span> Live API Results
+      </div>
+    </div>
+
+    <!-- LOADING STATE -->
+    <div class="loading-state" id="loadingState" style="display:none">
+      <div class="spinner"></div>
+      <p>Searching for devices...</p>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div class="error-state" id="errorState" style="display:none">
+      <div class="error-icon">⚠️</div>
+      <h3>API key not set</h3>
+      <p>Add your API Ninjas key in <strong>config.js</strong> to see live results.<br/>
+      Showing local results instead.</p>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div class="products-grid" id="productsGrid"></div>
+
+    <!-- NO RESULTS -->
+    <div class="no-results" id="noResults" style="display:none">
+      <div class="no-results-icon">🔍</div>
+      <h3>No devices found</h3>
+      <p>Try adjusting your budget or configuration</p>
+    </div>
+
+  </div>
+
+  <!-- DEVICE DETAIL MODAL -->
+  <div class="modal-overlay" id="deviceModal" style="display:none" onclick="closeModal(event)">
+    <div class="device-modal">
+      <button class="modal-close" onclick="document.getElementById('deviceModal').style.display='none'">✕</button>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">Tech<span>Pick</span></div>
+        <p>Smart recommendations for smart buyers.</p>
+      </div>
+      <div class="footer-col">
+        <strong>Pages</strong>
+        <a href="index.html">Home</a>
+        <a href="finder.html">Finder</a>
+        <a href="explore.html">Explore</a>
+        <a href="profile.html">Profile</a>
+      </div>
+      <div class="footer-col">
+        <strong>Categories</strong>
+        <a href="finder.html?cat=laptop">Laptops</a>
+        <a href="finder.html?cat=smartphone">Phones</a>
+        <a href="finder.html?cat=headphones">Audio</a>
+        <a href="finder.html?cat=tablet">Tablets</a>
+        <a href="finder.html?cat=smartwatch">Smartwatches</a>
+      </div>
+    </div>
+    <div class="footer-bottom">· TechPick 2026</div>
+  </footer>
+
+ <script src="data.js"></script>
+<script src="config.js"></script>
+<script src="shared.js"></script>
+<script src="auth.js"></script>
+<script src="finder.js"></script>
+</body>
+</html>

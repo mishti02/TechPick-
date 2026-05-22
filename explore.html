@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore — TechPick</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="explore.css"/>
+  <link rel="stylesheet" href="auth.css"/>
+</head>
+<body>
+
+ <nav class="navbar">
+  <a href="index.html" class="nav-logo">Tech<span>Pick</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="finder.html">Finder</a></li>
+    <li><a href="explore.html" class="active">Explore</a></li>
+    <li><a href="saved.html">Saved</a></li>
+    <li><a href="profile.html">Profile</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html" class="nav-contact-btn">📬 Contact</a>
+    <!-- auth.js appends user chip after this -->
+  </div>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="finder.html">Finder</a>
+  <a href="explore.html">Explore</a>
+  <a href="saved.html">Saved</a>
+  <a href="profile.html">Profile</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+  <!-- PAGE TABS -->
+  <div class="explore-tabs-wrap">
+    <div class="explore-tabs">
+      <button class="explore-tab active" onclick="switchTab('trending', this)">
+        🔥 Trending
+      </button>
+      <button class="explore-tab" onclick="switchTab('brands', this)">
+        🏷️ Brands
+      </button>
+    </div>
+  </div>
+
+  <!-- TRENDING TAB -->
+  <div class="explore-tab-content" id="tab-trending">
+    <div class="explore-wrap">
+
+      <div class="section-header">
+        <div class="section-tag">🔥 Hot Right Now</div>
+        <h2>Trending This Week</h2>
+        <p>The most popular and best-rated devices right now.</p>
+      </div>
+
+      <!-- PODIUM -->
+      <div class="podium-row" id="podium"></div>
+
+      <!-- FULL TRENDING GRID -->
+      <div class="section-header" style="margin-top:3rem">
+        <div class="section-tag">📋 All Trending</div>
+        <h2>Full Trending List</h2>
+      </div>
+      <div class="products-grid" id="trendingGrid"></div>
+
+    </div>
+  </div>
+
+  <!-- BRANDS TAB -->
+  <div class="explore-tab-content" id="tab-brands" style="display:none">
+    <div class="explore-wrap">
+
+      <div class="section-header">
+        <div class="section-tag">🏷️ Shop By Brand</div>
+        <h2>Popular Brands</h2>
+        <p>Click any brand to explore their full device lineup.</p>
+      </div>
+
+      <!-- BRAND CARDS -->
+      <div class="brands-grid" id="brandsGrid"></div>
+
+      <!-- BRAND PRODUCTS (shown on click) -->
+      <div id="brandProductsSection" style="display:none">
+        <div class="brand-hero" id="brandHero"></div>
+        <div class="brand-products-header">
+          <div>
+            <h2 class="brand-products-title" id="brandTitle"></h2>
+            <p class="brand-products-sub" id="brandSub"></p>
+          </div>
+          <button class="btn-outline" onclick="clearBrandFilter()">✕ Clear</button>
+        </div>
+        <div class="products-grid" id="brandGrid"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">Tech<span>Pick</span></div>
+        <p>Smart recommendations for smart buyers.</p>
+      </div>
+      <div class="footer-col">
+        <strong>Pages</strong>
+        <a href="index.html">Home</a>
+        <a href="finder.html">Finder</a>
+        <a href="explore.html">Explore</a>
+        <a href="profile.html">Profile</a>
+      </div>
+      <div class="footer-col">
+        <strong>Categories</strong>
+        <a href="finder.html?cat=laptop">Laptops</a>
+        <a href="finder.html?cat=smartphone">Phones</a>
+        <a href="finder.html?cat=headphones">Audio</a>
+        <a href="finder.html?cat=tablet">Tablets</a>
+        <a href="finder.html?cat=smartwatch">Smartwatches</a>
+      </div>
+    </div>
+    <div class="footer-bottom"> · TechPick 2026</div>
+  </footer>
+
+  <script src="data.js"></script>
+<script src="config.js"></script>
+<script src="shared.js"></script>
+<script src="auth.js"></script>
+<script src="explore.js"></script>
+</body>
+</html>

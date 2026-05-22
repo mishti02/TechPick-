@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile — TechPick</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="auth.css"/>
+  <link rel="stylesheet" href="profile.css"/>
+</head>
+<body>
+
+ <nav class="navbar">
+  <a href="index.html" class="nav-logo">Tech<span>Pick</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="finder.html">Finder</a></li>
+    <li><a href="explore.html">Explore</a></li>
+    <li><a href="saved.html">Saved</a></li>
+    <li><a href="profile.html" class="active">Profile</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="contact.html" class="nav-contact-btn">📬 Contact</a>
+    <!-- auth.js appends user chip after this -->
+  </div>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="finder.html">Finder</a>
+  <a href="explore.html">Explore</a>
+  <a href="saved.html">Saved</a>
+  <a href="profile.html">Profile</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+  <!-- PROFILE HERO BANNER -->
+  <div class="profile-hero-banner">
+    <div class="profile-hero-bg"></div>
+    <div class="profile-hero-content">
+      <div class="profile-avatar-large" id="profileAvatar">?</div>
+      <div class="profile-hero-info">
+        <div class="profile-hero-name" id="profileHeroName">Welcome!</div>
+        <div class="profile-hero-email" id="profileHeroEmail"></div>
+        <div class="profile-hero-meta">
+          <span id="profileHeroJoin"></span>
+          <span id="profileHeroBudget"></span>
+          <span id="profileHeroCat"></span>
+        </div>
+      </div>
+      <div class="profile-hero-actions">
+  <button class="btn-primary hero-btn" onclick="openEditModal()">
+    Edit Profile
+  </button>
+
+  <button class="danger-btn hero-btn" onclick="handleLogout()">
+    Sign Out
+  </button>
+</div>
+    </div>
+  </div>
+
+  <!-- STATS BANNER -->
+<div class="profile-score-banner">
+  <div class="psb-ring-wrap">
+    <svg class="psb-ring" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="32" fill="none" stroke="var(--border)" stroke-width="7"/>
+      <circle cx="40" cy="40" r="32" fill="none"
+        stroke="var(--accent)" stroke-width="7"
+        stroke-linecap="round"
+        stroke-dasharray="201"
+        stroke-dashoffset="201"
+        id="scoreRingFill"
+        style="transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 0.8s ease"/>
+    </svg>
+    <div class="psb-ring-label">
+      <span class="psb-pct" id="profileScorePct">0%</span>
+    </div>
+    <div class="psb-ring-sub">PROFILE SCORE</div>
+  </div>
+
+  <div class="psb-divider"></div>
+
+  <div class="psb-checklist" id="profileScoreChecklist">
+    <!-- filled by JS -->
+  </div>
+
+  <div class="psb-divider"></div>
+
+  <div class="psb-next" id="profileScoreNext">
+    <div class="psb-next-label">NEXT STEP</div>
+    <div class="psb-next-text" id="profileScoreNextText">Complete your profile to unlock your score.</div>
+  </div>
+</div>
+
+  <div class="profile-page-wrap">
+
+    <!-- ROW 1: EDIT INFO + TECH PERSONA -->
+    <div class="profile-section-title" id="editSection">✏️ Account Details</div>
+    <div class="profile-two-col">
+
+      <div class="profile-card">
+        <h3>Your Info</h3>
+        <div id="profileUserInfo" style="display:none" class="profile-user-strip">
+          <div class="pus-row"><span>✉️</span><span id="profileEmailDisplay"></span></div>
+          <div class="pus-row"><span>📅</span><span id="profileJoinDate"></span></div>
+        </div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" class="form-input" id="profileName" placeholder="e.g. Arjun Sharma"/>
+        </div>
+        <div class="form-group">
+          <label>Default Budget (₹)</label>
+          <input type="number" class="form-input" id="profileBudget" placeholder="e.g. 50000"/>
+        </div>
+        <div class="form-group">
+          <label>Favourite Category</label>
+          <select class="form-input" id="profileCategory">
+            <option value="">Select a category...</option>
+            <option value="smartphone">📱 Smartphones</option>
+            <option value="laptop">💻 Laptops</option>
+            <option value="headphones">🎧 Audio</option>
+            <option value="tablet">📟 Tablets</option>
+            <option value="smartwatch">⌚ Smartwatches</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Phone (optional)</label>
+          <input type="tel" class="form-input" id="profilePhone" placeholder="+91 98765 43210"/>
+        </div>
+        <button class="btn-primary profile-save-btn" onclick="saveProfile()">Save Changes</button>
+        <div class="profile-saved-msg" id="profileMsg" style="display:none">Profile saved!</div>
+      </div>
+
+      <div class="profile-card">
+  <h3>💰 Budget Planner</h3>
+  <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1.5rem">
+    Drag the slider to see how many devices fit your budget across each category.
+  </p>
+
+  <div class="bp-slider-wrap">
+    <div class="bp-budget-display" id="bpDisplay">₹50,000</div>
+    <input type="range" class="range-slider" id="bpSlider"
+      min="5000" max="250000" step="5000" value="50000"
+      oninput="updateBudgetPlanner()"/>
+    
+  </div>
+
+  <div class="bp-results" id="bpResults"></div>
+
+  <div class="bp-footer">
+    <a href="finder.html" id="bpFinderLink" class="btn-primary" style="width:100%;justify-content:center;margin-top:1.25rem">
+      Find Devices in This Budget →
+    </a>
+  </div>
+</div>
+    </div>
+
+    <!-- ROW 2: SAVED DEVICES PREVIEW -->
+    <div class="profile-section-title">
+      🔖 Saved Devices
+      <a href="saved.html" class="profile-section-link">View Full Page →</a>
+    </div>
+    <div class="profile-card profile-card-full">
+      <div id="savedDevicesList"></div>
+      <a href="saved.html" class="btn-outline" style="margin-top:1rem;display:inline-flex">
+        Open Saved Devices Page →
+      </a>
+    </div>
+
+    <!-- ROW 3: SEARCHES + ACTIVITY -->
+    <div class="profile-two-col">
+      <div class="profile-card">
+        <h3>🕐 Recent Searches</h3>
+        <div id="recentSearchesList"></div>
+        <button class="btn-outline clear-btn" onclick="clearSearches()">Clear History</button>
+      </div>
+      <div class="profile-card">
+        <h3>⚡ Activity</h3>
+        <div id="activityFeed"></div>
+      </div>
+    </div>
+
+    <!-- ROW 4: SETTINGS -->
+    <div class="profile-section-title">⚙️ Settings</div>
+    <div class="profile-two-col">
+      <div class="profile-card">
+        <h3>Display Preferences</h3>
+        <div class="dark-toggle-row">
+          <span class="dark-toggle-label">🌙 Dark Mode</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()"/>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="dark-toggle-row">
+          <span class="dark-toggle-label">🔔 Deal Alerts</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="alertsToggle" onchange="saveSetting('alerts', this.checked)"/>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="dark-toggle-row">
+          <span class="dark-toggle-label">✨ Show Trending Badges</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="trendingToggle" checked onchange="saveSetting('trending', this.checked)"/>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="dark-toggle-row" style="border-bottom:none">
+          <span class="dark-toggle-label">💰 Prices in Lakhs</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="lakhsToggle" onchange="saveSetting('lakhs', this.checked)"/>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <h3>🗑️ Data Management</h3>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;line-height:1.6">
+          Manage your stored data. These actions cannot be undone.
+        </p>
+        <div class="danger-zone-row">
+          <div><strong>Clear Saved Devices</strong><p>Remove all bookmarks</p></div>
+          <button class="danger-btn" style="width:auto;white-space:nowrap" onclick="clearAllSaved()">Clear</button>
+        </div>
+        <div class="danger-zone-row">
+          <div><strong>Clear Search History</strong><p>Delete recent searches</p></div>
+          <button class="danger-btn" style="width:auto;white-space:nowrap" onclick="clearSearches()">Clear</button>
+        </div>
+        <div class="danger-zone-row" style="border-bottom:none">
+          <div><strong>Delete Account</strong><p>Permanently remove your account</p></div>
+          <button class="danger-btn" style="width:auto;white-space:nowrap" onclick="deleteAccount()">Delete</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EDIT PROFILE MODAL -->
+<div class="profile-modal" id="profileModal">
+  <div class="profile-modal-box">
+
+    <div class="profile-modal-header">
+      <h2>Edit Profile</h2>
+      <button class="modal-close" onclick="closeEditModal()">✕</button>
+    </div>
+
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" class="form-input" id="modalProfileName"/>
+    </div>
+
+    <div class="form-group">
+      <label>Default Budget (₹)</label>
+      <input type="number" class="form-input" id="modalProfileBudget"/>
+    </div>
+
+    <div class="form-group">
+      <label>Favourite Category</label>
+      <select class="form-input" id="modalProfileCategory">
+        <option value="">Select category...</option>
+        <option value="smartphone">📱 Smartphones</option>
+        <option value="laptop">💻 Laptops</option>
+        <option value="headphones">🎧 Audio</option>
+        <option value="tablet">📟 Tablets</option>
+        <option value="smartwatch">⌚ Smartwatches</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Phone</label>
+      <input type="tel" class="form-input" id="modalProfilePhone"/>
+    </div>
+
+    <button class="btn-primary profile-save-btn" onclick="saveProfileFromModal()">
+      Save Changes
+    </button>
+
+  </div>
+</div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">Tech<span>Pick</span></div>
+        <p>Smart recommendations for smart buyers.</p>
+      </div>
+      <div class="footer-col">
+        <strong>Pages</strong>
+        <a href="index.html">Home</a>
+        <a href="finder.html">Finder</a>
+        <a href="explore.html">Explore</a>
+        <a href="profile.html">Profile</a>
+        <a href="saved.html">Saved</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <strong>Categories</strong>
+        <a href="finder.html?cat=smartphone">Smartphones</a>
+        <a href="finder.html?cat=laptop">Laptops</a>
+        <a href="finder.html?cat=headphones">Audio</a>
+        <a href="finder.html?cat=tablet">Tablets</a>
+        <a href="finder.html?cat=smartwatch">Smartwatches</a>
+      </div>
+    </div>
+    <div class="footer-bottom">· TechPick 2026</div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="config.js"></script>
+  <script src="shared.js"></script>
+  <script src="auth.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>
