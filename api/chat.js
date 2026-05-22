@@ -14,7 +14,7 @@ export default async function handler(req) {
     const body = await req.json();
 
     const groqBody = {
-      model: "llama3-8b-8192",
+      model: "llama-3.3-70b-versatile",
       max_tokens: 1000,
       messages: [
         { role: "system", content: body.system },
