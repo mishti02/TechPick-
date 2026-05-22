@@ -13,7 +13,6 @@ export default async function handler(req) {
   try {
     const body = await req.json();
 
-    // Convert Anthropic format → Gemini format
     const contents = body.messages.map(m => ({
       role: m.role === "assistant" ? "model" : "user",
       parts: [{ text: m.content }]
@@ -35,9 +34,19 @@ export default async function handler(req) {
     );
 
     const data = await response.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't get a response.";
+    
+    // Return full Gemini response for debugging
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    
+    if (!text) {
+      return new Response(JSON.stringify({
+        content: [{ text: "Debug: " + JSON.stringify(data) }]
+      }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
-    // Return in Anthropic format so chatbot.js doesn't need changes
     return new Response(JSON.stringify({
       content: [{ text }]
     }), {
@@ -46,8 +55,10 @@ export default async function handler(req) {
     });
 
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Internal server error" }), {
-      status: 500,
+    return new Response(JSON.stringify({
+      content: [{ text: "Error: " + error.message }]
+    }), {
+      status: 200,
       headers: { "Content-Type": "application/json" },
     });
   }
