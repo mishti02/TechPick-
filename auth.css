@@ -116,10 +116,29 @@
 }
 .auth-tab.active::after { transform: scaleX(1); }
 
-/* Form body */
+/* Form body — scrollable */
 .auth-body {
   padding: 1.75rem 2rem 2rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  position: relative;
 }
+/* Custom scrollbar for auth body */
+.auth-body::-webkit-scrollbar {
+  width: 4px;
+}
+.auth-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.auth-body::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.25);
+  border-radius: 4px;
+}
+.auth-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.45);
+}
+
 .auth-panel { display: none; animation: authFadeIn 0.25s ease; }
 .auth-panel.active { display: block; }
 
@@ -282,6 +301,42 @@
   line-height: 1.5;
 }
 .auth-avatar-hint strong { color: #2d1060; }
+
+/* ========================
+   SCROLL DOWN BUTTON
+   ======================== */
+.auth-scroll-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #c084fc);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+  font-size: 1rem;
+  line-height: 1;
+  transition: opacity 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 0.75rem auto 0;
+  position: sticky;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.auth-scroll-btn:hover {
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.45);
+  transform: translateX(-50%) translateY(-2px);
+}
+.auth-scroll-btn:active {
+  transform: translateX(-50%) translateY(0);
+}
+.auth-scroll-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
 
 /* ========================
    NAVBAR USER CHIP

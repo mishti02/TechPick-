@@ -62,7 +62,7 @@ function injectAuthModal() {
       </div>
 
       <!-- Form body -->
-      <div class="auth-body">
+      <div class="auth-body" id="authBody">
 
         <!-- ===== LOGIN PANEL ===== -->
         <div class="auth-panel active" id="panelLogin">
@@ -162,6 +162,15 @@ function injectAuthModal() {
           <div class="auth-switch">
             Already have an account? <a onclick="switchAuthTab('login')">Sign in here</a>
           </div>
+
+          <!-- Scroll down button — visible when content overflows -->
+          <button
+            class="auth-scroll-btn"
+            id="signupScrollBtn"
+            onclick="scrollSignupToBottom()"
+            title="Scroll to submit"
+            aria-label="Scroll down to submit button"
+          >&#8595;</button>
         </div>
 
       </div>
@@ -178,6 +187,12 @@ function injectAuthModal() {
       else handleSignup();
     }
   });
+
+  // Wire up scroll listener for scroll button visibility
+  const authBody = document.getElementById("authBody");
+  if (authBody) {
+    authBody.addEventListener("scroll", updateScrollBtn);
+  }
 }
 
 // ========================
@@ -221,6 +236,37 @@ function switchAuthTab(tab) {
   // Clear errors on switch
   document.getElementById("loginError").classList.remove("show");
   document.getElementById("signupError").classList.remove("show");
+  // Reset scroll position and update scroll button when switching to signup
+  const authBody = document.getElementById("authBody");
+  if (authBody) {
+    authBody.scrollTop = 0;
+  }
+  if (tab === "signup") {
+    setTimeout(updateScrollBtn, 50);
+  } else {
+    // Hide scroll button on login tab
+    const btn = document.getElementById("signupScrollBtn");
+    if (btn) btn.classList.add("hidden");
+  }
+}
+
+// ========================
+//  SCROLL DOWN BUTTON
+// ========================
+function scrollSignupToBottom() {
+  const authBody = document.getElementById("authBody");
+  if (authBody) {
+    authBody.scrollTo({ top: authBody.scrollHeight, behavior: "smooth" });
+  }
+}
+
+function updateScrollBtn() {
+  const authBody = document.getElementById("authBody");
+  const btn      = document.getElementById("signupScrollBtn");
+  if (!authBody || !btn) return;
+  // Hide the button when user is within 40px of the bottom
+  const nearBottom = authBody.scrollTop + authBody.clientHeight >= authBody.scrollHeight - 40;
+  btn.classList.toggle("hidden", nearBottom);
 }
 
 // ========================
@@ -424,7 +470,7 @@ function updateNavbar() {
     `;
   } else {
     // Logged out: show Login + Sign Up buttons
-   navRight.innerHTML = `
+    navRight.innerHTML = `
   <a href="contact.html" class="nav-contact-btn">📬 Contact</a>
   <div class="nav-auth-btns">
     <button class="btn-ghost" onclick="showAuthModal('login')">Sign In</button>
@@ -467,6 +513,8 @@ function gatePageWithAuth() {
     injectAuthModal();
     // Prevent scrolling
     document.body.style.overflow = "hidden";
+    // Check scroll button state after modal is rendered
+    setTimeout(updateScrollBtn, 100);
   } else {
     updateNavbar();
   }
