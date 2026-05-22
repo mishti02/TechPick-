@@ -1,9 +1,9 @@
 // ================================
 //  FINDER PAGE — finder.js
 //  Uses: fetch(), Promises, .then(),
-//  .catch(), async/await — lecture 35-40
+//  .catch(), async/await
 //
-//  API: Wikipedia REST API (no key needed)
+//  API: Wikipedia REST API 
 //  Docs: https://en.wikipedia.org/api/rest_v1/
 // ================================
 
@@ -169,7 +169,6 @@ function getFilteredProducts() {
 // ================================
 //  WIKIPEDIA-POWERED FETCH
 //  Uses: fetch(), Promises, .then(), .catch()
-//  Lecture 35-40
 //
 //  Strategy:
 //  1. Filter products from data.js using finderState
@@ -203,7 +202,7 @@ function fetchWithWikipedia() {
   showLoading(false);
   document.getElementById("searchBtnText").textContent = "Find Devices";
 
-  // For each product, fetch Wikipedia summary — Promise chain (lecture 35-40)
+  // For each product, fetch Wikipedia summary — Promise chain 
   filtered.forEach((product, index) => {
     // Build a good Wikipedia search term from the product name
     const searchTerm = encodeURIComponent(product.name);

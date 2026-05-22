@@ -63,7 +63,7 @@ function resetQuiz() {
 
 // ========================
 //  DEAL OF THE DAY TIMER
-//  setInterval — BOM lecture 31-34
+//  setInterval — BOM
 // ========================
 function startDealTimer() {
   // Check element exists before starting
@@ -92,7 +92,6 @@ function startDealTimer() {
 
 // ========================
 //  COMPARE DEVICES
-//  Arrays + DOM — lectures 17-26
 // ========================
 let compareSelected = [];
 
