@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Saved Devices — TechPick</title>
   <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="chatbot.css"/>
   <link rel="stylesheet" href="auth.css"/>
   <link rel="stylesheet" href="saved.css"/>
 </head>
@@ -168,10 +169,55 @@
     <div class="footer-bottom">· TechPick 2026</div>
   </footer>
 
+  <!-- CHATBOT -->
+<button id="chat-toggle" title="Chat with us">
+  💬
+</button>
+
+<div id="chat-popup">
+  <div class="chat-header">
+    <div class="bot-info">
+      <div class="bot-name">TechBot ⚡</div>
+      <div class="bot-status">Online</div>
+    </div>
+
+    <button class="clear-btn" id="clear-btn">
+      Clear
+    </button>
+  </div>
+
+  <div class="chat-messages" id="messages"></div>
+
+  <div class="quick-replies" id="quick-replies">
+    <button class="qr-btn">📱 Smartphones</button>
+    <button class="qr-btn">💻 Laptops</button>
+    <button class="qr-btn">🎧 Headphones</button>
+    <button class="qr-btn">🔋 Battery Tips</button>
+  </div>
+
+  <div class="chat-input-area">
+    <textarea
+      id="chat-input"
+      placeholder="Ask TechBot..."
+      rows="1">
+    </textarea>
+
+    <button id="send-btn">
+      ➤
+    </button>
+  </div>
+</div>
+
+<script src="chatbot.js"></script>
+
   <script src="data.js"></script>
   <script src="config.js"></script>
   <script src="shared.js"></script>
   <script src="auth.js"></script>
   <script src="saved.js"></script>
+
+
+
+  
 </body>
 </html>
