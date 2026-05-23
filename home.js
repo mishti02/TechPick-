@@ -232,7 +232,58 @@ function renderTestimonials() {
 }
 
 
+// ========================
+//  REVIEWS
+// ========================
+let userReviews = JSON.parse(localStorage.getItem("techpick_reviews") || "[]");
 
+function renderReviews() {
+  const list = document.getElementById("reviewList");
+  if (!list) return;
+  if (userReviews.length === 0) { list.innerHTML = ""; return; }
+  list.innerHTML = userReviews.slice().reverse().map(r => `
+    <div class="review-card">
+      <div class="review-top">
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <div class="t-avatar">${r.initial}</div>
+          <div>
+            <div class="review-name">${r.name}</div>
+            <div class="t-device">${r.device}</div>
+          </div>
+        </div>
+        <div class="review-stars">${"★".repeat(r.stars)}${"☆".repeat(5 - r.stars)}</div>
+      </div>
+      <p class="review-text">"${r.text}"</p>
+    </div>
+  `).join("");
+}
+
+function submitReview() {
+  const name   = document.getElementById("reviewName").value.trim();
+  const device = document.getElementById("reviewDevice").value.trim();
+  const stars  = document.getElementById("reviewStars").value;
+  const text   = document.getElementById("reviewText").value.trim();
+
+  if (!name)   { showToast("Please enter your name"); return; }
+  if (!device) { showToast("Please enter the device you bought"); return; }
+  if (!stars)  { showToast("Please select a star rating"); return; }
+  if (!text)   { showToast("Please write something about your experience"); return; }
+
+  userReviews.push({ name, initial: name[0].toUpperCase(), device, stars: parseInt(stars), text });
+  localStorage.setItem("techpick_reviews", JSON.stringify(userReviews));
+
+  const success = document.getElementById("reviewSuccess");
+  success.style.display = "inline-block";
+  setTimeout(() => { success.style.display = "none"; }, 3500);
+
+  document.getElementById("reviewName").value   = "";
+  document.getElementById("reviewDevice").value = "";
+  document.getElementById("reviewStars").value  = "";
+  document.getElementById("reviewText").value   = "";
+
+  renderReviews();
+  showToast("Review submitted! 🎉");
+}
 
 // ========================
 //  NEWSLETTER
