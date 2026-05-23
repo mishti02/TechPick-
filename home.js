@@ -284,6 +284,12 @@ function submitReview() {
   renderReviews();
   showToast("Review submitted! 🎉");
 }
+document.addEventListener("DOMContentLoaded", () => {
+  startDealTimer();
+  renderCompareCards();
+  renderTestimonials();
+  renderReviews(); // ← add this line
+});
 
 // ========================
 //  NEWSLETTER
